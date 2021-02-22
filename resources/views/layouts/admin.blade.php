@@ -10,9 +10,13 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="https://nafezly.com/css/fontawsome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/responsive-fonts.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
     <title>{{ config('app.name', 'Laravel') }}</title> 
 </head>
 
@@ -125,20 +129,19 @@
 
 
 
-                </div>
-                
-               
+                </div> 
             </div>
-            <div class="col-12 px-0 py-5 text-center ">
-                <span class="fal fa-user font-5 pt-2" style="border: 2px solid #fff;width: 55px;height: 55px;color: #fff;border-radius: 50%"> </span>
+            <div class="col-12 px-0 py-5 text-center d-flex justify-content-center">
+                <img src="/images/logox.png" style="width: 50%;" class="d-inline-block">
+                {{-- <span class="fal fa-user font-5 pt-2" style="border: 2px solid #fff;width: 55px;height: 55px;color: #fff;border-radius: 50%"> </span>
                 <div class="col-12 px-0 mt-2" style="color: #fff">
                     لوحة التحكم
-                </div> 
+                </div>  --}}
             </div>
             <div class="col-12 px-0">
                 <div class="col-12 px-0">
 
-                    <a href="#" class="col-12 px-0">
+                    <a href="{{route('admin.index')}}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex" >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-home font-3"> </span> 
@@ -148,7 +151,7 @@
                             </div> 
                         </div>
                     </a>
-                    <a href="#" class="col-12 px-0">
+                    <a href="{{route('contacts.index')}}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-users font-3"> </span> 
@@ -158,7 +161,7 @@
                             </div> 
                         </div>
                     </a>
-                    <a href="#" class="col-12 px-0">
+                    <a href="{{route('tags.index')}}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-tag font-3"> </span> 
@@ -168,7 +171,7 @@
                             </div> 
                         </div>
                     </a>
-                    <a href="#" class="col-12 px-0">
+                    <a href="{{route('imports.index')}}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-download font-3"> </span> 
@@ -178,16 +181,28 @@
                             </div> 
                         </div>
                     </a>
-                    <a href="#" class="col-12 px-0">
+
+                    <a href="{{route('message-templates.index')}}" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-envelope font-3"> </span> 
+                            </div>
+                            <div style="width: calc(100% - 50px)" class="px-2">
+                               نماذج الرسائل
+                            </div> 
+                        </div>
+                    </a>
+                    <a href="{{route('messages.index')}}" class="col-12 px-0">
+                        <div class="col-12 item px-0 d-flex " >
+                            <div style="width: 50px" class="px-3 text-center">
+                                <span class="fas fa-envelope font-3"> </span> 
                             </div>
                             <div style="width: calc(100% - 50px)" class="px-2">
                                ارسال رسالة
                             </div> 
                         </div>
                     </a>
+                    
                     {{-- <a href="#" class="col-12 px-0">
                         <div class="col-12 item px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
@@ -383,6 +398,10 @@
         $('.alert-click-hide').on('click',function(){
             $(this).fadeOut();
         });
+        $('.select2').select2();
+       /* $(document).ready(function() {
+            
+        });*/
     </script>
 </body>
 @livewireScripts

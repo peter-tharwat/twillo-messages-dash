@@ -9,8 +9,11 @@ class Tag extends Model
 {
     use HasFactory;
     protected $guarded=[];
-    public function contacts()
+    /*public function contacts()
     {
     	return $this->hasMany('\App\Models\Contact');
+    }*/
+    public function contacts(){
+        return $this->belongsToMany('App\Models\Contact','contact_tags','tag_id','contact_id');
     }
 }

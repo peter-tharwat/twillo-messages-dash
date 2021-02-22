@@ -9,8 +9,8 @@
 				</div>
 			</div>
 			<div style="width: calc(100% - 80px)" class="px-2 py-2">
-				<h6 class="font-1">المستخدمين</h6>
-				<h6 class="font-3">1200</h6>
+				<h6 class="font-1">جهات الاتصال</h6>
+				<h6 class="font-3">{{\App\Models\Contact::count()}}</h6>
 			</div>
 		</div>
 	</div>
@@ -19,12 +19,12 @@
 		<div class="col-12 px-0 py-2 d-flex " style="background: #fff;">
 			<div style="width: 80px;" class="p-2">
 				<div class="col-12 px-0 text-center d-flex align-items-center justify-content-center" style="background: #11233b;height: 64px;border-radius: 50%;">
-					<span class="fab fa-youtube font-5" style="color: #fff"></span>
+					<span class="fas fa-tags font-5" style="color: #fff"></span>
 				</div>
 			</div>
 			<div style="width: calc(100% - 80px)" class="px-2 py-2">
-				<h6 class="font-1">الدورات</h6>
-				<h6 class="font-3">18</h6>
+				<h6 class="font-1">التصنيفات</h6>
+				<h6 class="font-3">{{\App\Models\Tag::count()}}</h6>
 			</div>
 		</div>
 	</div>
@@ -32,12 +32,12 @@
 		<div class="col-12 px-0 py-2 d-flex " style="background: #fff;">
 			<div style="width: 80px;" class="p-2">
 				<div class="col-12 px-0 text-center d-flex align-items-center justify-content-center" style="background: #11233b;height: 64px;border-radius: 50%;">
-					<span class="fas fa-hands-helping font-5" style="color: #fff"></span>
+					<span class="fas fa-download font-5" style="color: #fff"></span>
 				</div>
 			</div>
 			<div style="width: calc(100% - 80px)" class="px-2 py-2">
-				<h6 class="font-1">الشركاء</h6>
-				<h6 class="font-3">4</h6>
+				<h6 class="font-1">عمليات الاستيراد</h6>
+				<h6 class="font-3">{{\App\Models\Import::count()}}</h6>
 			</div>
 		</div>
 	</div>
@@ -45,13 +45,13 @@
 		<div class="col-12 px-0 py-2 d-flex " style="background: #fff;">
 			<div style="width: 80px;" class="p-2">
 				<div class="col-12 px-0 text-center d-flex align-items-center justify-content-center" style="background: #11233b;height: 64px;border-radius: 50%;">
-					<span class="fas fa-box-full font-5" style="color: #fff"></span>
+					<span class="fas fa-envelope font-5" style="color: #fff"></span>
 				</div>
 			</div>
 
 			<div style="width: calc(100% - 80px)" class="px-2 py-2">
-				<h6 class="font-1">الكورسات</h6>
-				<h6 class="font-3">84</h6>
+				<h6 class="font-1">الرسائل</h6>
+				<h6 class="font-3">{{\App\Models\Message::count()}}</h6>
 			</div>
 		</div>
 	</div>
@@ -59,18 +59,42 @@
 		<div class="col-12 px-0 py-2 d-flex " style="background: #fff;">
 			<div style="width: 80px;" class="p-2">
 				<div class="col-12 px-0 text-center d-flex align-items-center justify-content-center" style="background: #11233b;height: 64px;border-radius: 50%;">
-					<span class="fas fa-play font-5" style="color: #fff"></span>
+					<span class="fal fa-envelope font-5" style="color: #fff"></span>
 				</div>
 			</div>
 
 			<div style="width: calc(100% - 80px)" class="px-2 py-2">
-				<h6 class="font-1">الفيديوهات</h6>
-				<h6 class="font-3">1720</h6>
+				<h6 class="font-1">نماذج الرسائل</h6>
+				<h6 class="font-3">{{\App\Models\MessageTemplate::count()}}</h6>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-6 col-sm-4 col-lg-3 col-xl-2 px-2 mb-3">
+	<div class="col-12 d-flex row mt-2">
+		<div class="col-12 col-lg-3 text-center  py-4 justify-content-center">
+			<div class="d-inline-block d-flex justify-content-center align-items-center" style="position: relative;">
+				<svg class="circle-chart m-auto" viewBox="0 0 33.83098862 33.83098862" xmlns="http://www.w3.org/2000/svg" style="width: 180px;">
+				<circle class="circle-chart__background" stroke="#f1f1f1" stroke-width="1" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+				<circle class="circle-chart__circle" stroke="#48da5e" stroke-width="1.5" stroke-dasharray="88,100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+				<span style="position: absolute;top: 28%;color: #48da5e" class="font-5">
+				@php 
+				$res = \Http::withBasicAuth(env('TWILLO_ACCOUNT_ID'),env('TWILLO_ACCOUNT_ACCESS_TOKEN'))->get('https://api.twilio.com/2010-04-01/Accounts/'.env('TWILLO_ACCOUNT_ID').'/Balance.json')->json();
+				
+				@endphp  
+				{{$res['balance'] }} <br>{{$res['currency']}}</span>
+				</svg>
+			</div>
+			
+			<div class="col-12 font-3 mt-3" style="color: #48da5e">
+				الرصيد المتاح
+				
+
+			</div>
+
+		</div>
+	</div>
+
+{{-- 	<div class="col-6 col-sm-4 col-lg-3 col-xl-2 px-2 mb-3">
 		<div class="col-12 px-0 py-2 d-flex " style="background: #fff;">
 			<div style="width: 80px;" class="p-2">
 				<div class="col-12 px-0 text-center d-flex align-items-center justify-content-center" style="background: #11233b;height: 64px;border-radius: 50%;">
@@ -213,7 +237,7 @@
 			</div>
 
 		</div>
-	</div>
+	</div> --}}
 	 
 
 </div>

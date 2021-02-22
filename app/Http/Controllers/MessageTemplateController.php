@@ -11,10 +11,16 @@ class MessageTemplateController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
-    public function index()
+     */ 
+    public function index(Request $request)
     {
-        //
+        $templates=MessageTemplate::where(function($q)use($request){
+            if($request->key!=null)
+                $q->where('title','LIKE',"%$request->key%")
+                ->orWhere('content','LIKE',"%$request->key%")
+                ->orWhere('note','LIKE',"%$request->key%");  
+        })->orderBy('id','DESC')->paginate();
+        return view('templates.index',compact('templates'));
     }
 
     /**
@@ -24,7 +30,7 @@ class MessageTemplateController extends Controller
      */
     public function create()
     {
-        //
+        return view('templates.create');
     }
 
     /**
@@ -35,7 +41,16 @@ class MessageTemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>"required|min:2|max:255", 
+            'content'=>"required|min:2|max:1000", 
+        ]);
+        $template=MessageTemplate::create([
+            'title'=>$request->title, 
+            'content'=>$request->content,
+        ]);
+        emotify('success', 'تمت الإضافة بنجاح');
+        return redirect()->route('message-templates.index');
     }
 
     /**
@@ -55,9 +70,9 @@ class MessageTemplateController extends Controller
      * @param  \App\Models\MessageTemplate  $messageTemplate
      * @return \Illuminate\Http\Response
      */
-    public function edit(MessageTemplate $messageTemplate)
+    public function edit(MessageTemplate $message_template)
     {
-        //
+        return view('templates.edit',compact('message_template'));
     }
 
     /**
@@ -69,7 +84,16 @@ class MessageTemplateController extends Controller
      */
     public function update(Request $request, MessageTemplate $messageTemplate)
     {
-        //
+        $request->validate([
+            'title'=>"required|min:2|max:255", 
+            'content'=>"required|min:2|max:1000", 
+        ]);
+        $messageTemplate->update([
+            'title'=>$request->title, 
+            'content'=>$request->content,
+        ]);
+        emotify('success', 'تم التعديل بنجاح');
+        return redirect()->route('message-templates.index');
     }
 
     /**
@@ -80,6 +104,8 @@ class MessageTemplateController extends Controller
      */
     public function destroy(MessageTemplate $messageTemplate)
     {
-        //
+       $messageTemplate->delete();
+       emotify('success', 'تم الحذف بنجاح');
+        return redirect()->route('message-templates.index');
     }
 }

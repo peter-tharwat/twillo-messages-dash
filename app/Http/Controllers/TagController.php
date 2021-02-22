@@ -12,9 +12,16 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+
+    public function index(Request $request)
     {
-        //
+        $tags=Tag::where(function($q)use($request){
+            if($request->key!=null)
+                $q->where('tag_name','LIKE',"%$request->key%")
+                ->orWhere('note','LIKE',"%$request->key%");  
+        })->orderBy('id','DESC')->paginate();
+        return view('tags.index',compact('tags'));
     }
 
     /**
@@ -24,7 +31,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('tags.create');
     }
 
     /**
@@ -35,7 +42,16 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tag_name'=>"required|min:2|max:255", 
+            'note'=>"nullable|max:255", 
+        ]);
+        $tag=Tag::create([
+            'tag_name'=>$request->tag_name, 
+            'note'=>$request->note,
+        ]);
+        emotify('success', 'تمت الإضافة بنجاح');
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -57,7 +73,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        return view('tags.edit',compact('tag'));
     }
 
     /**
@@ -69,7 +85,16 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $request->validate([
+            'tag_name'=>"required|min:2|max:255", 
+            'note'=>"nullable|max:255", 
+        ]);
+        $tag->update([
+            'tag_name'=>$request->tag_name,  
+            'note'=>$request->note,
+        ]);
+        emotify('success', 'تم التعديل بنجاح');
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -80,6 +105,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        emotify('success', 'تمت الحذف بنجاح');
+        return redirect()->route('tags.index');
     }
 }
